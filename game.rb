@@ -1,10 +1,12 @@
 require_relative 'board'
 require_relative 'human_player'
+require_relative 'chess_utils/chess_utils'
 
 class Game
   attr_reader :board, :white, :black, :current_player
 
-  def initialize(white_player, black_player)
+  def initialize(white_player = HumanPlayer.new(:white),
+                 black_player = HumanPlayer.new(:black))
     @board = Board.new
     @white = white_player
     @black = black_player
@@ -12,24 +14,22 @@ class Game
   end
 
   def setup
-    board.populate_grid
+    board.fill_rows
   end
 
   def play
     until won?
-      system("clear")
-      board.render
-
-      puts "#{current_player.color.to_s.capitalize}'s turn"
+      render_game
       play_turn
       switch_players!
     end
 
-    board.render
+    render_game
     puts "Checkmate!"
   end
 
   def play_turn
+    puts "#{current_player}'s turn"
     move = nil
     move = current_player.get_move until valid_move?(move)
     start_pos, end_pos = move
@@ -50,11 +50,11 @@ class Game
   def won?
     [:black, :white].any? { |color| board.checkmate?(color) }
   end
+
+  private
+
+  def render_game
+    system("clear")
+    puts board.render
+  end
 end
-
-
-#checkmatetest
-#6,5, 5,5  - f2, f3
-#1,4, 3,4 - e7, e5
-#6,6, 4,6 - g2, g4
-#0,3 , 4,7  d8, h4 -

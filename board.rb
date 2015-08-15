@@ -2,34 +2,21 @@ require 'byebug'
 require_relative 'pieces'
 
 class Board
-  STARTING_POSITIONS = {
-    0 => Rook,
-    1 => Knight,
-    2 => Bishop,
-    3 => Queen,
-    4 => King,
-    5 => Bishop,
-    6 => Knight,
-    7 => Rook
-  }
+  include ChessUtils
+  include ChessUtils::Renderable
 
-  BOARD_SIZE = 8
-
-  attr_reader :size
-
-  def initialize(size = BOARD_SIZE)
-    @size = size
-    @grid = Array.new(size) { Array.new(size) }
+  def initialize
+    @rows = Array.new(SIZE) { Array.new(SIZE) }
   end
 
   def [](pos)
     x, y = pos
-    grid[x][y]
+    rows[x][y]
   end
 
   def []=(pos, piece)
     x, y = pos
-    grid[x][y] = piece
+    rows[x][y] = piece
   end
 
   def move(start_pos, end_pos)
@@ -49,7 +36,7 @@ class Board
   end
 
   def on_board?(pos)
-    pos.all? { |coord| coord.between?(0, BOARD_SIZE-1) }
+    pos.all? { |coord| coord.between?(0, SIZE - 1) }
   end
 
   def in_check?(color)
@@ -65,7 +52,7 @@ class Board
   end
 
   def pieces
-    grid.flatten.compact
+    rows.flatten.compact
   end
 
   def dup
@@ -85,29 +72,28 @@ class Board
     in_check?(color) && pieces.all? { |piece| piece.valid_moves.empty? }
   end
 
-  def populate_grid
+  def fill_rows
     STARTING_POSITIONS.each do |coord, piece|
-      drop_piece(piece, [0, coord],                :black)
-      drop_piece(piece, [(BOARD_SIZE - 1), coord], :white)
+      drop_piece(piece, [0, coord],          :black)
+      drop_piece(piece, [(SIZE - 1), coord], :white)
     end
 
-    (0...BOARD_SIZE).each do |coord|
-      drop_piece(Pawn, [1, coord],                :black)
-      drop_piece(Pawn, [(BOARD_SIZE - 2), coord], :white)
-    end
-  end
-
-  def render
-    grid.each do |row|
-      puts row.map { |space| (space.nil?) ? "_" : space.to_s }.join
+    (0...SIZE).each do |coord|
+      drop_piece(Pawn, [1, coord],          :black)
+      drop_piece(Pawn, [(SIZE - 2), coord], :white)
     end
   end
 
   protected
-  attr_reader :grid
+  attr_reader :rows
 
   private
+
   def drop_piece(piece, pos, color)
-    self[pos] = piece.new(self, pos, color)
+    self[pos] = constantize(piece).new(self, pos, color)
+  end
+
+  def constantize(piece)
+    Object.const_get(piece.to_s.capitalize)
   end
 end

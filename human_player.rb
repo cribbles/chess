@@ -1,9 +1,12 @@
 class HumanPlayer
-
   attr_reader :color
 
   def initialize(color)
     @color = color
+  end
+
+  def to_s
+    color.to_s.capitalize.colorize(:red)
   end
 
   def get_move

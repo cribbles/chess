@@ -30,21 +30,17 @@ class Game
 
   def play_turn
     puts "#{current_player}'s turn"
-    move = nil
-    move = current_player.get_move until valid_move?(move)
-    start_pos, end_pos = move
-    board.move(start_pos, end_pos)
-  end
+    move = current_player.get_move
 
-  def valid_move?(move)
-    return false until move
-
-    start_pos = move.first
-    board.piece?(start_pos) && board[start_pos].color == current_player.color
+    perform_move(move)
+  rescue InvalidMoveError => e
+    puts e.message unless e.nil?
+    puts "invalid move, try again"
+    retry
   end
 
   def switch_players!
-    @current_player = (current_player == white) ? black : white
+    @current_player = (current_player == white ? black : white)
   end
 
   def won?
@@ -56,5 +52,18 @@ class Game
   def render_game
     system("clear")
     puts board.render
+  end
+
+  def perform_move(move)
+    start_pos, end_pos = move
+    piece = board[start_pos]
+
+    if !piece
+      raise InvalidMoveError, "couldn't find piece at starting position"
+    elsif piece.color != current_player.color
+      raise InvalidMoveError, "not your piece!"
+    else
+      piece.move(end_pos)
+    end
   end
 end

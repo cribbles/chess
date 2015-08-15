@@ -12,6 +12,14 @@ class Piece
     @color = color
   end
 
+  def move(pos)
+    if !moves.include?(pos)
+      raise InvalidMoveError, "can't make that move for #{self.class}"
+    else
+      board.move_piece(self, pos)
+    end
+  end
+
   def moves
     x, y = pos
     moves = []
@@ -54,7 +62,7 @@ class Piece
   def valid_moves
     self.moves.reject do |end_move|
       test_board = board.dup
-      test_board.move(pos, end_move)
+      test_board.move_piece(self.dup, end_move)
 
       test_board.in_check?(color)
     end

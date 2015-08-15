@@ -1,3 +1,5 @@
+require_relative 'chess_utils/chess_utils'
+
 class HumanPlayer
   include ChessUtils::Notatable
 

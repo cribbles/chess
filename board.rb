@@ -1,8 +1,7 @@
-require 'byebug'
 require_relative 'pieces'
+require_relative 'chess_utils/chess_utils'
 
 class Board
-  include ChessUtils
   include ChessUtils::Renderable
 
   def initialize
@@ -10,27 +9,19 @@ class Board
   end
 
   def [](pos)
-    x, y = pos
-    rows[x][y]
+    row, col = pos
+    rows[row][col]
   end
 
   def []=(pos, piece)
-    x, y = pos
-    rows[x][y] = piece
+    row, col = pos
+    rows[row][col] = piece
   end
 
-  def move(start_pos, end_pos)
-    piece = self[start_pos]
-
-    if piece.nil?
-      raise ArgumentError.new "Nil starting piece"
-    elsif !piece.moves.include?(end_pos)
-      raise ArgumentError.new "Invalid move"
-    end
-
-    self[start_pos] = nil
-    self[end_pos] = piece
-    piece.pos = end_pos
+  def move_piece(piece, pos)
+    self[pos] = piece
+    self[piece.pos] = nil
+    piece.pos = pos
 
     piece.first_move_taken if piece.is_a?(Pawn)
   end

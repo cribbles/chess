@@ -23,8 +23,6 @@ class Board
     self[pos] = piece
     self[piece.pos] = nil
     piece.pos = pos
-
-    piece.first_move_taken if piece.is_a?(Pawn)
   end
 
   def in_range?(pos)

@@ -11,7 +11,9 @@ class Pawn < Piece
     @first_move
   end
 
-  def first_move_taken
+  def move(pos)
+    super(pos)
+
     @first_move = false
   end
 

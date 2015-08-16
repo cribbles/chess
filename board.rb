@@ -95,7 +95,7 @@ class Board
 
   def positions
     STARTING_POSITIONS.inject({}) do |positions, (coord, piece)|
-      positions.merge!({ coord => constantize(piece) })
+      positions.merge(coord => constantize(piece))
     end
   end
 

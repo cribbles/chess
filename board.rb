@@ -2,6 +2,7 @@ require_relative 'pieces'
 require_relative 'chess_utils/chess_utils'
 
 class Board
+  include ChessUtils
   include ChessUtils::Renderable
 
   def initialize
@@ -26,7 +27,7 @@ class Board
     piece.first_move_taken if piece.is_a?(Pawn)
   end
 
-  def on_board?(pos)
+  def in_range?(pos)
     pos.all? { |coord| coord.between?(0, SIZE - 1) }
   end
 

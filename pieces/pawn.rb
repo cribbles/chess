@@ -21,14 +21,14 @@ class Pawn < Piece
 
     base_deltas.each do |delta|
       move = get_move(pos, delta)
-      possible_move = board.on_board?(move) && !board.piece?(move)
+      possible_move = board.in_range?(move) && !board.piece?(move)
 
       (possible_move) ? moves << move : break
     end
 
     attack_deltas.each do |delta|
       move = get_move(pos, delta)
-      possible_move = board.on_board?(move) && opponent?(move)
+      possible_move = board.in_range?(move) && opponent?(move)
 
       moves << move if possible_move
     end

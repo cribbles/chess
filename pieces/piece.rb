@@ -42,7 +42,7 @@ class Piece
   end
 
   def possible_move?(pos)
-    board.on_board?(pos)
+    board.in_range?(pos)
   end
 
   def same_color_piece?(pos)

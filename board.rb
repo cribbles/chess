@@ -1,3 +1,4 @@
+require 'byebug'
 require_relative 'pieces'
 require_relative 'chess_utils/chess_utils'
 
@@ -46,10 +47,17 @@ class Board
   end
 
   def dup
-    dup = Board.new
-    pieces.each { |piece| dup[piece.pos] = piece.dup }
+    duped_board = self.class.new
 
-    dup
+    pieces.each do |piece|
+      piece.class.new(duped_board, piece.color, piece.pos)
+    end
+
+    duped_board
+  end
+
+  def empty?(pos)
+    self[pos].nil?
   end
 
   def piece?(pos)
@@ -63,15 +71,21 @@ class Board
   end
 
   def fill_rows
-    STARTING_POSITIONS.each do |coord, piece|
-      drop_piece(piece, [0, coord],          :black)
-      drop_piece(piece, [(SIZE - 1), coord], :white)
+    positions.map do |coord, piece|
+      piece.new(self, :black, [0, coord])
+      piece.new(self, :white, [(SIZE - 1), coord])
     end
 
     (0...SIZE).each do |coord|
-      drop_piece(Pawn, [1, coord],          :black)
-      drop_piece(Pawn, [(SIZE - 2), coord], :white)
+      Pawn.new(self, :black, [1, coord])
+      Pawn.new(self, :white, [(SIZE - 2), coord])
     end
+  end
+
+  def add_piece(piece, pos)
+    raise 'space not empty' unless empty?(pos)
+
+    self[pos] = piece
   end
 
   protected
@@ -79,8 +93,10 @@ class Board
 
   private
 
-  def drop_piece(piece, pos, color)
-    self[pos] = constantize(piece).new(self, pos, color)
+  def positions
+    STARTING_POSITIONS.inject({}) do |positions, (coord, piece)|
+      positions.merge!({ coord => constantize(piece) })
+    end
   end
 
   def constantize(piece)

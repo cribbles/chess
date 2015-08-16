@@ -1,8 +1,9 @@
 require_relative 'piece'
 
 class Pawn < Piece
-  def initialize(starting_pos, board, color)
-    super(starting_pos, board, color)
+  def initialize(board, color, pos)
+    super(board, color, pos)
+
     @first_move = true
     get_deltas
   end

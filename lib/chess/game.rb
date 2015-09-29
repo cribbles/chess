@@ -1,6 +1,6 @@
 require_relative 'board'
 require_relative 'human_player'
-require_relative 'chess_utils/chess_utils'
+require_relative '../chess_utils/chess_utils'
 
 class Game
   attr_reader :board, :white, :black, :current_player

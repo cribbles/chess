@@ -1,4 +1,4 @@
-require_relative 'stepping_piece.rb'
+require_relative 'stepping_piece'
 
 class King < SteppingPiece
   def deltas

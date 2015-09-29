@@ -1,4 +1,4 @@
-require_relative 'chess_utils/chess_utils'
+require_relative '../chess_utils/chess_utils'
 
 class HumanPlayer
   include ChessUtils::Notatable
@@ -14,7 +14,7 @@ class HumanPlayer
   end
 
   def get_move
-    puts "\nselect your next move(s), e.g. 'd3, e4'"
+    puts "\nselect your next move(s), e.g. 'e2, e4'"
     print ">"
     moves = gets.chomp.gsub(/ /,'').split(',')
 

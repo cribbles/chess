@@ -1,6 +1,5 @@
-require 'byebug'
 require_relative 'pieces'
-require_relative 'chess_utils/chess_utils'
+require_relative '../chess_utils/chess_utils'
 
 class Board
   include ChessUtils

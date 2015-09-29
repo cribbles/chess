@@ -39,9 +39,9 @@ Simply download, navigate to the root folder and run `./chess.rb` or `./checkers
 The [computer AI](lib/checkers/computer_player.rb) is definitely one of the coolest features of the application. Here's how it works:
 
 - Computer AI performs a breadth-first search using the game's move-validation system to determine the best move
- - If there are any jump sequences available, it picks the longest one possible (i.e. it claims as many pieces as it can)
- - If there are no possible jump moves, it picks the safest slide possible (i.e. it plays defensively)
- - Otherwise, it makes a random move - unless it's landlocked and can't move, then it forfeits
+- If there are any jump sequences available, it picks the longest one possible (i.e. it claims as many pieces as it can)
+- If there are no possible jump moves, it picks the safest slide possible (i.e. it plays defensively)
+- Otherwise, it makes a random move - unless it's landlocked and can't move, then it forfeits
 
 ## Future polishing touches (TBD)
 

@@ -14,7 +14,7 @@ class HumanPlayer
   end
 
   def get_move
-    puts "\nselect your next move(s), e.g. 'e2, e4'"
+    puts "\nselect your next move, e.g. 'e2, e4'"
     print ">"
     moves = gets.chomp.gsub(/ /,'').split(',')
 

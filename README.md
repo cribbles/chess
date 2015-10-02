@@ -2,13 +2,18 @@
 
 ## Summary
 
-This is a two-player Chess and Checkers game suite written in Ruby and played over command line. It makes use of a hand-rolled module, [ChessUtils](/lib/chess_utils), that encapsulates shared logic between the games and provides an API for developing similar ones.
+This is a two-player Chess and Checkers game suite written in Ruby and played
+over command line. It makes use of a hand-rolled module,
+[ChessUtils](/lib/chess_utils), that encapsulates shared logic between the games
+and provides an API for developing similar ones.
 
-I wrote this with a strong focus on [Sandy Metz](http://www.poodr.com/)-style OOP principles.
+I wrote this with a strong focus on [Sandy Metz](http://www.poodr.com/)-style
+OOP principles.
 
 ## How to Play
 
-Simply download, navigate to the root folder and run `./chess.rb` or `./checkers.rb`. If that doesn't work, try running `chmod +x ./chess.rb`.
+Simply download, navigate to the root folder and run `./chess.rb` or
+`./checkers.rb`. If that doesn't work, try running `chmod +x ./chess.rb`.
 
 ## Features
 
@@ -20,7 +25,8 @@ Simply download, navigate to the root folder and run `./chess.rb` or `./checkers
 
 ### Checkers
 
-- Play against a friend, a computer AI, or watch two computer opponents face off against each other
+- Play against a friend, a computer AI, or watch two computer opponents face off
+against each other
 - Accepts notation for multi-jump sequences - e.g. `a4, c6, e8`
 - Human and computer players share the same API with duck-typing
 
@@ -32,16 +38,22 @@ Simply download, navigate to the root folder and run `./chess.rb` or `./checkers
   - Translates user input from algebraic chess notation to array coordinates
   - Uses regex and error handling to validate user input
 - `Traversable`
-  - Provides utility methods for calculating delta coordinates in a 2d positional grid
+  - Provides utility methods for calculating delta coordinates in a 2d
+positional grid
 
 ## Checkers AI
 
-The [computer AI](lib/checkers/computer_player.rb) is definitely one of the coolest features of the application. Here's how it works:
+The [checkers AI](lib/checkers/computer_player.rb) is definitely one of the
+coolest features of this suite. Here's how it works:
 
-- Computer AI performs a breadth-first search using the game's move-validation system to determine the best move
-- If there are any jump sequences available, it picks the longest one possible (i.e. it claims as many pieces as it can)
-- If there are no possible jump moves, it picks the safest slide possible (i.e. it plays defensively)
-- Otherwise, it makes a random move - unless it's landlocked and can't move, then it forfeits
+- Computer AI performs a breadth-first search over the tree of all possible move
+sequences for each piece
+- If there are any possible jump sequences, it picks the longest one available
+(i.e. it claims as many pieces as it can)
+- If there are no possible jump moves, it picks the safest slide available (i.e.
+it plays defensively)
+- Otherwise, it makes a random move - unless it's landlocked and can't move,
+then it forfeits
 
 ## Future polishing touches (TBD)
 
@@ -56,4 +68,4 @@ The [computer AI](lib/checkers/computer_player.rb) is definitely one of the cool
 Ruby Chess Suite is released under the [MIT License](/LICENSE).
 
 ---
-Developed by [Chris Sloop](http://github.com/cribbles)
+Developed by [Chris Sloop](http://chrissloop.com)

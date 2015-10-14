@@ -46,7 +46,7 @@ positional grid
 The [checkers AI](lib/checkers/computer_player.rb) is definitely one of the
 coolest features of this suite. Here's how it works:
 
-- Computer AI performs a breadth-first search over the tree of all possible move
+- Computer AI performs a depth-first search over the tree of all possible move
 sequences for each piece
 - If there are any possible jump sequences, it picks the longest one available
 (i.e. it claims as many pieces as it can)
